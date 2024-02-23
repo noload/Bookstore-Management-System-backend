@@ -65,3 +65,23 @@ export const signinController = async (req, res) => {
     });
   }
 };
+
+export const getProfileController = async (req, res) => {
+  try {
+    const user = await userModel
+      .findById(req.user.userId)
+      .select("-password -__v"); //select() used to avoid some fields and also used to show some fields
+    res.status(200).json({
+      success: true,
+      message: "Successfully Fetched User Details",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong while fetching profile details ",
+      error,
+    });
+  }
+};
