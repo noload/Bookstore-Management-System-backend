@@ -85,3 +85,27 @@ export const getProfileController = async (req, res) => {
     });
   }
 };
+
+export const updateProfileController = async (req, res) => {
+  try {
+    const old = await userModel.findByIdAndUpdate(req.user.userId, req.body);
+
+    await old.save();
+    const newUser = await userModel
+      .findById(req.user.userId)
+      .select("-password -__v");
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully  Updated User",
+      newUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong in update profile controller",
+      error,
+    });
+  }
+};
