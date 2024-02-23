@@ -1,6 +1,6 @@
 # BookStore Management System
 
-## setting up project
+## Setting up project
 
 - Clone the repository
 - Download all dependancy using `npm install` command
