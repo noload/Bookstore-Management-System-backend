@@ -28,7 +28,7 @@ userSchema.pre("save", async function () {
 });
 
 userSchema.methods.comparePassword = async function (plainPassword) {
-  return bcrypt.compare(plainPassword, this.pasword);
+  return await bcrypt.compare(plainPassword, this.password);
 };
 userSchema.methods.createJWT = async function () {
   return jwt.sign({ userId: this._id }, JWT_KEY, { expiresIn: "1d" });

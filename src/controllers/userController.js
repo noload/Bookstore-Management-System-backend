@@ -27,3 +27,41 @@ export const signupController = async (req, res) => {
     });
   }
 };
+
+export const signinController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      res.status(404).json({
+        success: false,
+        message: "User Not Found",
+      });
+    }
+
+    //Password comaparision
+    const pass = await user.comparePassword(password);
+    if (!pass) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid crediantial | Please enter correct password",
+      });
+    }
+
+    //token creation
+    const token = await user.createJWT();
+
+    res.status(200).json({
+      success: true,
+      message: "Logged Successfully",
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong in signin controller",
+      error,
+    });
+  }
+};
