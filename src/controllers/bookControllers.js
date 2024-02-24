@@ -19,3 +19,21 @@ export const addBookController = async (req, res) => {
     });
   }
 };
+
+export const getBooksController = async (req, res) => {
+  try {
+    const books = await bookModel.find();
+    return res.status(200).json({
+      success: true,
+      message: "Successfully Fetched All Book Details",
+      books,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong in get books controller",
+      error: error.message,
+    });
+  }
+};
