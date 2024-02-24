@@ -6,7 +6,7 @@ export const authMiddleware = async (req, res, next) => {
     const authHeader = req.headers.authorization;
     const token = authHeader.split(" ")[1];
     if (!token) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "Token Not Found",
       });
@@ -18,7 +18,7 @@ export const authMiddleware = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Something went wrong in auth middleware",
       error: error.message,
