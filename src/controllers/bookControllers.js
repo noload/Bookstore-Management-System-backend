@@ -37,3 +37,25 @@ export const getBooksController = async (req, res) => {
     });
   }
 };
+
+export const getBookController = async (req, res) => {
+  try {
+    const bookId = req.params.bookId;
+    const books = await bookModel.findById(bookId);
+    if (!books) {
+      res.send("Book Not Found");
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Successfully Fetched All Book Details",
+      books,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong in get books controller",
+      error: `Book Not Found with BookId ${req.params.bookId}`,
+    });
+  }
+};
