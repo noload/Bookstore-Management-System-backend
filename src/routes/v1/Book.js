@@ -4,6 +4,7 @@ import {
   addBookController,
   getBookController,
   getBooksController,
+  updateBookController,
 } from "../../controllers/bookControllers.js";
 import { addBookValidation } from "../../middlewares/bookValidationMiddleware.js";
 
@@ -13,5 +14,6 @@ const router = Router();
 router.post("/books", authMiddleware, addBookValidation, addBookController);
 router.get("/books", authMiddleware, getBooksController);
 router.get("/books/:bookId", authMiddleware, getBookController);
+router.put("/books/:bookId", authMiddleware, updateBookController);
 
 export default router;
