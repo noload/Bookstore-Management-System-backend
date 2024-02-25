@@ -51,7 +51,7 @@ export const signinController = async (req, res) => {
     //token creation
     const token = await user.createJWT();
 
-    //session creation and storing user data
+    // storing user data into session
     req.session.authenticated = true;
     //storing user information
     const hashPassword = await bcrypt.hash(password, 10);

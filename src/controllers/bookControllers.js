@@ -76,3 +76,20 @@ export const updateBookController = async (req, res) => {
     });
   }
 };
+export const deleteBookController = async (req, res) => {
+  try {
+    const deletedBook = await bookModel.findByIdAndDelete(req.params.bookId);
+    return res.status(200).json({
+      success: true,
+      message: "Book deleted Successfully",
+      deletedBook,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong in delete books controller",
+      error: "Facing issue while deleting book",
+    });
+  }
+};

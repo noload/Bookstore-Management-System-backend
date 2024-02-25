@@ -2,6 +2,7 @@ import { Router } from "express";
 import { authMiddleware } from "../../middlewares/authMiddleware.js";
 import {
   addBookController,
+  deleteBookController,
   getBookController,
   getBooksController,
   updateBookController,
@@ -16,5 +17,6 @@ router.post("/books", authMiddleware, addBookValidation, addBookController);
 router.get("/books", authMiddleware, authSession, getBooksController);
 router.get("/books/:bookId", authMiddleware, getBookController);
 router.put("/books/:bookId", authMiddleware, updateBookController);
+router.delete("/books/:bookId", authMiddleware, deleteBookController);
 
 export default router;
