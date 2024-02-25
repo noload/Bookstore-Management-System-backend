@@ -1,5 +1,5 @@
 import userModel from "../model/userModel.js";
-
+import bcrypt from "bcryptjs";
 export const signupController = async (req, res) => {
   try {
     const { email } = req.body;
@@ -51,6 +51,17 @@ export const signinController = async (req, res) => {
     //token creation
     const token = await user.createJWT();
 
+    //session creation and storing user data
+    req.session.authenticated = true;
+    //storing user information
+    const hashPassword = await bcrypt.hash(password, 10);
+    req.session.user = {
+      username: email,
+      password: hashPassword,
+      token,
+    };
+
+    console.log(req.session);
     res.status(200).json({
       success: true,
       message: "Logged Successfully",
