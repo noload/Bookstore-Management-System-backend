@@ -19,11 +19,14 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 //basic session configuration
+const store = new session.MemoryStore(); // It is default store
 app.use(
   session({
     secret: SESSION_KEY,
+    cookie: { maxAge: 1000 * 60 * 60 * 24, secure: true, sameSite: "none" },
     resave: false,
     saveUninitialized: false,
+    store,
   })
 );
 //routers
