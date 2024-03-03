@@ -37,6 +37,7 @@ const bookSchema = new mongoose.Schema({
       },
     },
   ],
+  default: [],
 });
 
 export default mongoose.model("book", bookSchema);

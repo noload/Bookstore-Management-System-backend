@@ -93,3 +93,26 @@ export const deleteBookController = async (req, res) => {
     });
   }
 };
+export const addBookReview = async (req, res) => {
+  try {
+    const { comment, rating } = req.body;
+    const bookId = req.params.bookId;
+    let book = await bookModel.findById(bookId);
+    const userId = req.user.userId;
+    book.review.push({ userId, comment, rating });
+    await book.save();
+    return res.status(200).json({
+      success: true,
+      message: "Successfully added book review",
+      book,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong in add books review controller",
+      error: `Book Not Found with BookId ${req.params.bookId}`,
+      error,
+    });
+  }
+};
